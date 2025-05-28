@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Touchpoints Code Snippet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .code-container {
+            background: #1a1a2e;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 8px 16px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .close { background: #ff5f56; }
+        .minimize { background: #ffbd2e; }
+        .maximize { background: #27ca3f; }
+
+        .title {
+            color: #a6a6a6;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            color: #a78bfa;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .copy-btn:hover {
+            background: rgba(124, 58, 237, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .code-content {
+            color: #e5e7eb;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .keyword { color: #8b5cf6; font-weight: 600; }
+        .variable { color: #06b6d4; }
+        .string { color: #10b981; }
+        .bracket { color: #f59e0b; }
+        .comment { color: #6b7280; font-style: italic; }
+        .arrow { color: #ec4899; }
+        .bold-text { color: #fbbf24; font-weight: 600; }
+
+        .line {
+            display: block;
+            padding: 2px 0;
+        }
+
+        .line:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            margin: 0 -8px;
+            padding: 2px 8px;
+        }
+
+        .line-number {
+            color: #6b7280;
+            margin-right: 16px;
+            user-select: none;
+            min-width: 20px;
+            display: inline-block;
+            text-align: right;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .code-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .code-content {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="code-container">
+        <div class="header">
+            <div class="window-controls">
+                <div class="control close"></div>
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
+            </div>
+            <div class="title">specsavers_touchpoints.py</div>
+            <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+        </div>
+        
+        <div class="code-content">
+            <span class="line"><span class="line-number">1</span><span class="comment"># Specsavers Customer Journey Touchpoints</span></span>
+            <span class="line"><span class="line-number">2</span><span class="variable">touchpoints</span> <span class="keyword">=</span> <span class="bracket">[</span></span>
+            <span class="line"><span class="line-number">3</span>    <span class="string">"Research & Awareness: Customer researches Specsavers' products and services (through website) <span class="bold-text">**before**</span> visiting the store"</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">4</span>    <span class="string">'Appointment Booking: Scheduling an appointment with the optometrist for eye test. Also includes appointment confirmation and reminder.'</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">5</span>    <span class="string">'Store Visit<span class="arrow">-></span>Accessibility: The ease of finding and accessing the store, including parking and accessibility for disabled people.'</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">6</span>    <span class="string">'Store Visit<span class="arrow">-></span>Store Entry & Reception: The initial interaction with the store when customer enters the store such as greeting from the staff.'</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">7</span>    <span class="string">'Store Visit<span class="arrow">-></span>Wait Time: the interval between a customer enters the store and he is seen by an optometrist.'</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">8</span>    <span class="string">"Store Visit<span class="arrow">-></span>Eye Examination & Consultation: The medical assessment of the customer's eyes by an optometrist and optometrist consultation & explanation."</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">9</span>    <span class="string">"Store Visit<span class="arrow">-></span>Product Exploration & Selection: customer explore and select the variety and availability of frames, lenses, and other products (sunglasses, contact lenses) offered by Specsavers."</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">10</span>    <span class="string">"Store Visit<span class="arrow">-></span>Order & Pay: Customer's finalisation of their order on lenses and frames, including any additional products such as contact lenses, additional services, adjustments. And payment."</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">11</span>    <span class="string">"Store Visit<span class="arrow">-></span>General: no specific touchpoint of store visit is mentioned. Customer just talks about general things like the atmosphere of the store or helpfulness of staff."</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">12</span>    <span class="string">"Order Fulfilment<span class="arrow">-></span>Product Delivery: Customer receives their ordered products by delivery"</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">13</span>    <span class="string">"Order Fulfilment<span class="arrow">-></span>In Store Pickup: Customer pickups their glasses in store. This touchpoint might also involve prescription verification where the optometrist verifys the prescription is accurate and/or fitting and adjustment of the lenses."</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">14</span>    <span class="string">"After Service: Assistance provided after the purchase, such as adjustments and repairs of the lenses."</span><span class="keyword">,</span></span>
+            <span class="line"><span class="line-number">15</span>    <span class="string">"Customer Feedback and Follow-Up: Communication with the customer after the purchase, often to check on their satisfaction and address any issues"</span></span>
+            <span class="line"><span class="line-number">16</span><span class="bracket">]</span></span>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        Code copied to clipboard! ✓
+    </div>
+
+    <script>
+        function copyCode() {
+            const codeText = `touchpoints = [
+    "Research & Awareness: Customer researches Specsavers' products and services (through website) **before** visiting the store",
+    'Appointment Booking: Scheduling an appointment with the optometrist for eye test. Also includes appointment confirmation and reminder.',
+    'Store Visit->Accessibility: The ease of finding and accessing the store, including parking and accessibility for disabled people.',
+    'Store Visit->Store Entry & Reception: The initial interaction with the store when customer enters the store such as greeting from the staff.',
+    'Store Visit->Wait Time: the interval between a customer enters the store and he is seen by an optometrist.',
+    "Store Visit->Eye Examination & Consultation: The medical assessment of the customer's eyes by an optometrist and optometrist consultation & explanation.",
+    "Store Visit->Product Exploration & Selection: customer explore and select the variety and availability of frames, lenses, and other products (sunglasses, contact lenses) offered by Specsavers.",
+    "Store Visit->Order & Pay: Customer's finalisation of their order on lenses and frames, including any additional products such as contact lenses, additional services, adjustments. And payment.",
+    "Store Visit->General: no specific touchpoint of store visit is mentioned. Customer just talks about general things like the atmosphere of the store or helpfulness of staff.",
+    "Order Fulfilment->Product Delivery: Customer receives their ordered products by delivery", 
+    "Order Fulfilment->In Store Pickup: Customer pickups their glasses in store. This touchpoint might also involve prescription verification where the optometrist verifys the prescription is accurate and/or fitting and adjustment of the lenses.",
+    "After Service: Assistance provided after the purchase, such as adjustments and repairs of the lenses.",
+    "Customer Feedback and Follow-Up: Communication with the customer after the purchase, often to check on their satisfaction and address any issues"
+]`;
+
+            navigator.clipboard.writeText(codeText).then(() => {
+                const notification = document.getElementById('notification');
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                // Fallback for browsers that don't support clipboard API
+                const textArea = document.createElement('textarea');
+                textArea.value = codeText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const notification = document.getElementById('notification');
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 2000);
+            });
+        }
+
+        // Add subtle animations on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const lines = document.querySelectorAll('.line');
+            lines.forEach((line, index) => {
+                line.style.opacity = '0';
+                line.style.transform = 'translateX(-20px)';
+                line.style.animation = `fadeInLeft 0.6s ease forwards ${index * 0.05}s`;
+            });
+        });
+
+        // Add CSS animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInLeft {
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

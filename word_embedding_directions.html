@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Embedding: 8 Directions</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        #chart {
+            width: 500px;
+            height: 500px;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .direction-point {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .direction-point:hover {
+            transform: scale(1.2);
+        }
+        
+        .axis-line {
+            stroke: #ddd;
+            stroke-width: 1;
+            opacity: 0.6;
+        }
+        
+        .grid-line {
+            stroke: #f0f0f0;
+            stroke-width: 0.5;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Word Embedding Visualization</h1>
+        <p class="subtitle">8 Directional Words in 2D Vector Space</p>
+        
+        <svg id="chart" viewBox="0 0 500 500">
+            <!-- Grid lines -->
+            <defs>
+                <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                    <path d="M 50 0 L 0 0 0 50" fill="none" class="grid-line"/>
+                </pattern>
+            </defs>
+            <rect width="500" height="500" fill="url(#grid)" />
+            
+            <!-- Axes -->
+            <line x1="0" y1="250" x2="500" y2="250" class="axis-line" stroke-width="2"/>
+            <line x1="250" y1="0" x2="250" y2="500" class="axis-line" stroke-width="2"/>
+            
+            <!-- Axis labels -->
+            <text x="480" y="245" font-size="12" fill="#888" text-anchor="end">X (1.0)</text>
+            <text x="255" y="15" font-size="12" fill="#888">Y (1.0)</text>
+            <text x="20" y="245" font-size="12" fill="#888">(-1.0)</text>
+            <text x="255" y="490" font-size="12" fill="#888">(-1.0)</text>
+            
+            <!-- Origin -->
+            <circle cx="250" cy="250" r="3" fill="#333" opacity="0.5"/>
+            <text x="255" y="245" font-size="10" fill="#888">(0,0)</text>
+        </svg>
+        
+        <div class="info">
+            <strong>Word Embedding Concept:</strong> Each direction word is represented as a point in 2D space, where similar meanings cluster together. The coordinates represent the word's "embedding vector" - a mathematical representation that captures semantic relationships.
+        </div>
+    </div>
+
+    <script>
+        // Direction data with exact coordinates
+        const directions = [
+            { name: 'East', x: 1, y: 0, color: '#e74c3c' },
+            { name: 'Northeast', x: 1/Math.sqrt(2), y: 1/Math.sqrt(2), color: '#f39c12' },
+            { name: 'North', x: 0, y: 1, color: '#3498db' },
+            { name: 'Northwest', x: -1/Math.sqrt(2), y: 1/Math.sqrt(2), color: '#9b59b6' },
+            { name: 'West', x: -1, y: 0, color: '#2ecc71' },
+            { name: 'Southwest', x: -1/Math.sqrt(2), y: -1/Math.sqrt(2), color: '#1abc9c' },
+            { name: 'South', x: 0, y: -1, color: '#34495e' },
+            { name: 'Southeast', x: 1/Math.sqrt(2), y: -1/Math.sqrt(2), color: '#e67e22' }
+        ];
+
+        const svg = document.getElementById('chart');
+        
+        // Convert coordinates to SVG space (center at 250,250, scale by 200)
+        function toSVG(x, y) {
+            return {
+                x: 250 + x * 200,
+                y: 250 - y * 200  // Flip Y axis for SVG
+            };
+        }
+
+        // Add direction points
+        directions.forEach((dir, index) => {
+            const pos = toSVG(dir.x, dir.y);
+            
+            // Draw line from origin to point
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', '250');
+            line.setAttribute('y1', '250');
+            line.setAttribute('x2', pos.x);
+            line.setAttribute('y2', pos.y);
+            line.setAttribute('stroke', dir.color);
+            line.setAttribute('stroke-width', '2');
+            line.setAttribute('opacity', '0.6');
+            svg.appendChild(line);
+            
+            // Draw point
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', pos.x);
+            circle.setAttribute('cy', pos.y);
+            circle.setAttribute('r', '8');
+            circle.setAttribute('fill', dir.color);
+            circle.setAttribute('class', 'direction-point');
+            circle.setAttribute('stroke', 'white');
+            circle.setAttribute('stroke-width', '2');
+            svg.appendChild(circle);
+            
+            // Add label
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', pos.x);
+            text.setAttribute('y', pos.y - 15);
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('font-size', '12');
+            text.setAttribute('font-weight', 'bold');
+            text.setAttribute('fill', dir.color);
+            text.textContent = dir.name;
+            svg.appendChild(text);
+            
+            // Add coordinates
+            const coords = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            coords.setAttribute('x', pos.x);
+            coords.setAttribute('y', pos.y + 25);
+            coords.setAttribute('text-anchor', 'middle');
+            coords.setAttribute('font-size', '10');
+            coords.setAttribute('fill', '#666');
+            coords.textContent = `(${dir.x.toFixed(2)}, ${dir.y.toFixed(2)})`;
+            svg.appendChild(coords);
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.direction-point').forEach((point, index) => {
+            point.addEventListener('mouseenter', function() {
+                this.setAttribute('r', '10');
+                this.style.filter = 'drop-shadow(0 0 10px rgba(0,0,0,0.3))';
+            });
+            
+            point.addEventListener('mouseleave', function() {
+                this.setAttribute('r', '8');
+                this.style.filter = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

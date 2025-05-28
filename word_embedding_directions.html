@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Embedding: 8 Directions</title>
+    <title>Word Embedding Illustration</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
+        /* Make container responsive */
+        .main-content {
+            max-width: 100%;
+            overflow-x: auto;
+        }
         
         .container {
+            max-width: 100%;
+            overflow-x: auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 30px;
@@ -39,8 +46,10 @@
         }
         
         #chart {
-            width: 500px;
-            height: 500px;
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            aspect-ratio: 1;
             margin: 0 auto;
             display: block;
         }

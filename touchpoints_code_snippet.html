@@ -11,11 +11,18 @@
             box-sizing: border-box;
         }
 
+        /* Make container responsive */
+        .container, .main-content {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
         body {
+            margin: 0;
             font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
             background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;

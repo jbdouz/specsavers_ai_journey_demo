@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>Comment Splitting Flow</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .raw-comment {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 14px;
+            color: #495057;
+            line-height: 1.5;
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .raw-comment::before {
+            content: 'Raw Comment';
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .fork-arrows {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        
+        .arrow-up,
+        .arrow-down {
+            font-size: 24px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .arrow-up::after {
+            content: '↗';
+        }
+        
+        .arrow-down::after {
+            content: '↘';
+        }
+        
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            flex: 1;
+            min-width: 400px;
+        }
+        
+        .touchpoint-result {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .touchpoint-tag {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            min-width: 140px;
+            text-align: center;
+        }
+        
+        .split-comment {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 13px;
+            color: #495057;
+            line-height: 1.4;
+            flex: 1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .highlight {
+            background: rgba(40, 167, 69, 0.2);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .flow-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .fork-arrows {
+                flex-direction: row;
+                gap: 20px;
+            }
+            
+            .arrow-up::after {
+                content: '→';
+            }
+            
+            .arrow-down::after {
+                content: '→';
+            }
+            
+            .touchpoint-result {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .touchpoint-tag {
+                min-width: auto;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Comment Splitting by Touchpoints</h1>
+        
+        <div class="flow-container">
+            <!-- Raw Comment -->
+            <div class="raw-comment">
+                "The process was easy and interactions with the people at the different stages (<span class="highlight">preliminary testing, optometrist</span>, <span class="highlight">girl who helped me choose the glasses</span>, <span class="highlight">the man who fitted the glasses on collection</span>) were all professional, helpful and pleasant to deal with. I was impressed. Everyone there seemed to take their job seriously and enjoy it."
+            </div>
+            
+            <!-- Fork Arrows -->
+            <div class="fork-arrows">
+                <div class="arrow-up"></div>
+                <div class="arrow-down"></div>
+            </div>
+            
+            <!-- Results -->
+            <div class="results-container">
+                <div class="touchpoint-result">
+                    <div class="touchpoint-tag">Store Visit →<br>Sight Test</div>
+                    <div class="split-comment">
+                        "The process was easy and interactions with the people at the different stages (preliminary testing, optometrist) were all professional, helpful and pleasant to deal with. I was impressed. Everyone there seemed to take their job seriously and enjoy it."
+                    </div>
+                </div>
+                
+                <div class="touchpoint-result">
+                    <div class="touchpoint-tag">Order Fulfilment →<br>Glasses Pickup</div>
+                    <div class="split-comment">
+                        "the man who fitted the glasses on collection were all professional, helpful and pleasant to deal with."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
